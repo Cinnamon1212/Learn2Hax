@@ -2,6 +2,8 @@
 > A collection of hacking recourses and small guides
 
 ## Content (coming soon)
+* Linux fundamentals
+* Windows fundamentals
 * PWN 
 * Reverse engineering
 * Web hacking
