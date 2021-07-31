@@ -6,15 +6,16 @@
 RSA (named after Rivest-Shamir-Adleman) is a public-key cryptosystem, used in modern applications. RSA implementations can be found in a wide range of places such as:
 * PGP encryption
 * SSL
-* digital signatures
-and more. 
+* digital signatures  
+
+and more.   
 While common modulus attacks are uncommon in real-world scenarios, they are found in CTFs or other hacking challenges.
 
 ## Scenario
 I'll set the scene with three characters. Steve, Tom and Julie. Steve has a message he needs to send to Tom but Julie keeps eavesdropping.
 Steve and Tom use RSA encryption with Tom's public key (n, e^1). Unexpectedly a bit is flipped and the message is encrypted with a faulty public key. (n, e^2).  
 
-Julie gets a holds of these and knows she can get the clear text using two different ciphertexts of the same message. Each encrypted with a different exponent but a different modulus.
+Julie gets a holds of these and knows she can get the clear text using two different ciphertexts of the same message. Each encrypted with a different exponent but a common modulus.
 
 message 1:
   ct₁ = E₍ₙ, ₑ₁₎(M)
