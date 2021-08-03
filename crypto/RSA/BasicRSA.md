@@ -18,3 +18,9 @@ The process can be brown down into steps:
 * For encryption, calculate the ciphertext from the plaintext using this equation: CT = PT^E mod N
 * For decryption we use: PT = CT^D mod N
 
+## RSA Problem
+
+The RSA proble summarizes the task of performing an RSA private-key operation given only the public key. The RSA algorithm raises a message to an exponent, modulo a composite number (N) whose factors are unknown. The task can be described as finding the e^th roots of an arbitrary number, modulo N. 
+For larger RSA key sizes (1024 bits and above), no efficient method of solving this is known.
+
+Let's say a system was found, the security of RSA-Based crytosystems would be jeopardized. The RSA problem is to efficiently compute P given an RSA public key (N, e) and ciphertext: C ≡ P^e (mod N). The structure of an RSA public key requires N be a large semiprime (such as the sum of 2 large primes), that 2 < e < N, that e be coprime to φ(N), and that 0 <= C < N. C is chosen randomly within that range.
