@@ -46,17 +46,17 @@ According to Bezout, if the denominator a and the modulus n are not [co-primes](
 ## Back to the fun part
 Okay so, how do we actually use this? it's not as complex as the previous section made it sound.
 If gcd(e1,e2) == 1, we have x and y such that: 
-![image](https://user-images.githubusercontent.com/65077960/127724886-526ddd72-1441-4648-b4d5-099c324784be.png)
+![image](https://user-images.githubusercontent.com/65077960/128417836-d642f614-aabd-4bb7-8c42-9adab441abaa.png)
 
 Now using [Extended Euclidean algorithm](https://brilliant.org/wiki/extended-euclidean-algorithm/), we can find x and y then easily retrieve the plain text.  
 All math below is perform in the common modulo:  
-![image](https://user-images.githubusercontent.com/65077960/127724918-d56bb1fa-0815-4300-99ca-20cfe9258973.png)
+![image](https://user-images.githubusercontent.com/65077960/128417909-cf25a02b-8d5d-4bd0-afbd-5ee3c3e9bd3e.png)
 
 If we deep dive into the equation, it gets a little more complicated to evaluate, y will normally be negative. C^y must be evaluated according to this:  
-![image](https://user-images.githubusercontent.com/65077960/127724945-9bb2e129-6fe3-46d9-b7c7-5e131275a769.png)
+![image](https://user-images.githubusercontent.com/65077960/128417956-8031a7c0-60a3-443b-b668-222e820fd7aa.png)
 
 As previously stated, for that fraction to be valid, C₂ must be invertible in mod n. gcd(C₂,n)=1 must also hold. Our final equation to recover the plaintext is:
-![image](https://user-images.githubusercontent.com/65077960/127725028-0d62be20-d1b5-48a7-9e14-d41c2af79a79.png)
+![image](https://user-images.githubusercontent.com/65077960/128418004-96f4f728-67b1-45f7-9d4b-eca410d58e79.png)
 
 Doing this on pen and paper is beyond time-consuming. Luckily this is pretty easy to do it in python and there's plenty of scripts available to do it. 
 Here is one that I liked:  
