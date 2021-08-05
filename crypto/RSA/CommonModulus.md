@@ -46,9 +46,8 @@ According to Bezout, if the denominator a and the modulus n are not [co-primes](
 ## Back to the fun part
 Okay so, how do we actually use this? it's not as complex as the previous section made it sound.
 If gcd(e1,e2) == 1, we have x and y such that: 
-```
 ![image](https://user-images.githubusercontent.com/65077960/127724886-526ddd72-1441-4648-b4d5-099c324784be.png)
-```
+
 Now using [Extended Euclidean algorithm](https://brilliant.org/wiki/extended-euclidean-algorithm/), we can find x and y then easily retrieve the plain text.  
 All math below is perform in the common modulo:  
 ![image](https://user-images.githubusercontent.com/65077960/127724918-d56bb1fa-0815-4300-99ca-20cfe9258973.png)
